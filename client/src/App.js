@@ -9,6 +9,7 @@ const App = () => {
       .getAll()
       .then(response => {
         setNotes(response.data)
+        console.log(response.data)
       })
   }, [])
 

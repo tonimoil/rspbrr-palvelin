@@ -24,10 +24,6 @@ let notes = [
     }
 ]
 
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-});
-
 app.get('/api/notes', (req, res) => {
     res.json(notes)
   })
@@ -55,6 +51,10 @@ app.delete('/api/notes/:id', (request, response) => {
     console.log(note)
     response.json(note)
 })
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+});
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {

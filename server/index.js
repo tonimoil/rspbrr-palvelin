@@ -1,62 +1,69 @@
+require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const path = require('path')
+const Note = require('./models/note')
 
 const app = express()
 
 app.use(cors())
 app.use(express.json())
-
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
-let notes = [
-    {
-        id:1,
-        content:"note1",
-        date: "2020-01-10T17:30:31.098Z",
-        important: true
-    },
-    {
-        id:2,
-        content:"note2",
-        date: "2020-01-10T18:39:34.091Z",
-        important: false
-    }
-]
+/*                     */
+/*                     */
+/*  Sovelluksen polut  */
+/*                     */
+/*                     */
 
+/* Kaikkien haku */
 app.get('/api/notes', (req, res) => {
-    res.json(notes)
-  })
+    Note.find({}).then(notes => {
+        res.json(notes)
+    })
+})
 
+/* Id:llä haku */
 app.get('/api/notes/:id', (request, response) => {
-    const id = Number(request.params.id)
-    const note = notes.find(note => note.id === id)
-
-    if(note) {
-        response.json(note)
-    } else {
+    Note.findById(request.params.id)
+    .then(note => {
+        if (note) {
+            response.json(note)
+        } else {
         response.status(404).end()
+        }
+    })
+    .catch(error => {
+        response.status(500).end()
+    })
+})
+
+/* Post polku */
+app.post('/api/notes', (request, response) => {
+    const body = request.body
+
+    if (body.content === undefined || body.apikey != process.env.API_KEY) {
+      return response.status(400).json({ error: 'error' })
     }
-})
-
-app.delete('/api/notes/:id', (request, response) => {
-    const id = Number(request.params.id)
-    notes = notes.filter(note => note.id !== id)
   
-    response.status(204).end()
+    const note = new Note({
+      content: body.content,
+      important: body.important || false,
+      date: new Date(),
+    })
+  
+    note.save().then(savedNote => {
+      response.json(savedNote)
+    })
 })
 
-  app.post('/api/notes', (request, response) => {
-    const note = request.body
-    console.log(note)
-    response.json(note)
-})
-
+/* Palautetaan defaulttina reactin luoma sivu */
 app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-});
+    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'))
+})
 
-const PORT = process.env.PORT || 3001
+/* Lopuksi asetetaan sovellus kuuntelemaan ympäristömuuttujissa asetettua porttia */
+const PORT = process.env.PORT
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })

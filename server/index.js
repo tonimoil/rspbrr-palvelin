@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const path = require('path')
-const Note = require('./models/note')
+const Temperature = require('./models/temperature')
 
 const app = express()
 
@@ -11,49 +11,57 @@ app.use(express.json())
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 /*                     */
-/*                     */
 /*  Sovelluksen polut  */
-/*                     */
 /*                     */
 
 /* Kaikkien haku */
-app.get('/api/notes', (req, res) => {
-    Note.find({}).then(notes => {
-        res.json(notes)
+app.get('/api/temperatures', (req, res) => {
+    Temperature.find({}).then(temps => {
+        res.json(temps)
     })
 })
 
-/* Id:llä haku */
-app.get('/api/notes/:id', (request, response) => {
-    Note.findById(request.params.id)
-    .then(note => {
-        if (note) {
-            response.json(note)
-        } else {
-        response.status(404).end()
+app.get('/api/latestbyid', (req, res) => {
+    Temperature.aggregate([
+        {
+            $sort: { deviceId: 1, date: 1}
+        },
+        {
+            $group: {
+                    "_id": "$deviceId",
+                    "latest": {$last:"$date"},
+                    last:{$last:"$$ROOT"}
+            }
+        },
+        {
+            $addFields: {
+                temperature : "$last.temperature"
+            }
+        },
+        {
+            $unset:"last"
         }
-    })
-    .catch(error => {
-        response.status(500).end()
+    ]).then(temps => {
+        res.json(temps)
     })
 })
 
-/* Post polku */
-app.post('/api/notes', (request, response) => {
+/* Post polku lämpötilalle, palvelin tallentaa ajan */
+app.post('/api/posttemperature', (request, response) => {
     const body = request.body
 
-    if (body.content === undefined || body.apikey != process.env.API_KEY) {
+    if (isNaN(parseFloat(body.temp)) || isNaN(parseInt(body.deviceId)) || body.apikey != process.env.API_KEY ) {
       return response.status(400).json({ error: 'error' })
     }
-  
-    const note = new Note({
-      content: body.content,
-      important: body.important || false,
+
+    const temp = new Temperature({
+      temperature: body.temp,
       date: new Date(),
+      deviceId: body.deviceId,
     })
-  
-    note.save().then(savedNote => {
-      response.json(savedNote)
+
+    temp.save().then(savedTemp => {
+      response.json(savedTemp)
     })
 })
 

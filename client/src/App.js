@@ -59,7 +59,7 @@ const App = () => {
     noteService
       .getAll()
       .then(response => {
-        setTemps(response.data)
+        setTemps(response.data.sort(function(a,b) {return a._id - b._id}))
       })
   }, [])
 

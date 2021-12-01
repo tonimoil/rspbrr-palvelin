@@ -9,3 +9,18 @@ div {
     background-color: beige;
     border-radius: 10px;
 }
+
+.python-koodi {
+    white-space: pre-wrap;
+    display: inline-block;
+    padding:50px;
+    border-style:ridge;
+    border-radius: 1px;
+    border-color: rebeccapurple;
+    background-color: beige;
+  }
+
+.comment {
+    font-family: 'Courier New', Courier, monospace;
+    color:rebeccapurple;
+}

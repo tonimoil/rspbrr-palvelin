@@ -49,7 +49,7 @@ const Ohjeet = () => {
       while True:
       <br/>    try:
       <br/>        temperature = dhtDevice.temperature<span className="comment">  # Tulostetaan tiedot konsoliin</span>
-      <br/>        print(f"Temp: {'{temperature}'})<span className="comment">  # f-stringi voi ottaa sisäänsä muuttujan</span>
+      <br/>        print(f"Temp: {'{temperature}'}")<span className="comment">  # f-stringi voi ottaa sisäänsä muuttujan</span>
       <br/>
       <br/>    except RuntimeError as error:<span className="comment">  # Koska dht anturit ovat virheherkkiä niin ohjelma jatkaa toimimista pienistä virheistä huolimatta</span>
       <br/>        print(error.args[0])  <span className="comment">  # Tulostetaan virheilmoitus</span>

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseUrl = 'https://rspbrr-palvelin.herokuapp.com/api/latestbyid'
+const baseUrl = '/api/latestbyid'
 
 const getAll = () => {
     return axios.get(baseUrl)

@@ -13,14 +13,28 @@ mongoose.connect(url)
     })
 
 const tempSchema = new mongoose.Schema({
-  temperature: Number,
-  date: Date,
-  deviceId: Number,
+  temperature: {
+    type: Number,
+    min: -50,
+    max: 100,
+    required: true
+  },
+  date: {
+    type: Date,
+    required: true
+  },
+  deviceId: {
+    type: Number,
+    min: 1,
+    max: 99999,
+    required: true
+  }
 })
 
 tempSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
+    delete returnedObject.id
     delete returnedObject._id
     delete returnedObject.__v
   }

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseUrl = '/api/latestbyid'
+const baseUrl = '/api/temp/latestbyid'
 
 const getAll = () => {
     return axios.get(baseUrl)

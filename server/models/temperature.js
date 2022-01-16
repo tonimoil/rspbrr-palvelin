@@ -23,21 +23,23 @@ const tempSchema = new mongoose.Schema({
     type: Date,
     required: true
   },
-  deviceId: {
-    type: Number,
-    min: 1,
-    max: 99999,
-    required: true
+  device: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Device'
   }
 })
 
 tempSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
+    delete returnedObject.device
     delete returnedObject.id
     delete returnedObject._id
     delete returnedObject.__v
   }
 })
 
-module.exports = mongoose.model('Temperature', tempSchema)
+//module.exports = mongoose.model('Temperature', tempSchema)
+const Temperature = mongoose.model('Temperature', tempSchema)
+
+module.exports = Temperature

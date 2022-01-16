@@ -11,7 +11,8 @@ const App = () => {
     tempService
       .getAll()
       .then(response => {
-        setTemps(response.data.sort(function(a,b) {return a._id - b._id}))
+        console.log(response)
+        setTemps(response.data.sort(function(a,b) {return a.deviceID - b.deviceID}))
       })
   }, [])
 

@@ -18,7 +18,6 @@ const App = () => {
   return (
     <div className="App">
       <LampotilatContainer temps={temps}/>
-      <Ohjeet/>
     </div>
   );
 }

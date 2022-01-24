@@ -11,7 +11,6 @@ const App = () => {
     tempService
       .getAll()
       .then(response => {
-        console.log(response)
         setTemps(response.data.sort(function(a,b) {return a.deviceID - b.deviceID}))
       })
   }, [])
@@ -23,5 +22,6 @@ const App = () => {
     </div>
   );
 }
+//poistettu <Ohjeet/> 24.01.2022 ties-testipalvelinta varten
 
 export default App;

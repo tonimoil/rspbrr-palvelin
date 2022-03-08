@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './styles/app.css'
 import tempService from './services/service'
-import Ohjeet from './components/instructions'
+import OhjeetNew from './components/instructions-new'
 import LampotilatContainer from './components/temperatureContainer'
 
 const App = () => {
@@ -18,6 +18,7 @@ const App = () => {
   return (
     <div className="App">
       <LampotilatContainer temps={temps}/>
+      <OhjeetNew/>
     </div>
   );
 }

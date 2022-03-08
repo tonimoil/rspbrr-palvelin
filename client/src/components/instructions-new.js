@@ -63,4 +63,4 @@ const OhjeetNew = () => {
     )
   }
 
-  export default Ohjeet
+  export default OhjeetNew

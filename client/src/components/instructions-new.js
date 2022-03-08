@@ -59,6 +59,13 @@ const OhjeetNew = () => {
         <br/>
         <br/>    time.sleep(2.0)  <span className="comment">  # Odotetaan hetki</span>
       </div>
+
+      <div>
+        <h3>Rajapinta</h3>
+        <a href="/images/vuokaavio.ties546.jpg">
+          <img alt="vuokaavio" src="/images/vuokaavio-ties546.jpg" width="150px" height="auto"></img>
+        </a>
+      </div>
     </div>
     )
   }

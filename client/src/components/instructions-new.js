@@ -63,7 +63,7 @@ const OhjeetNew = () => {
 
       <div>
         <h3>Rajapinta</h3>
-          <img alt="vuokaavio" src={src} width="200px"/>
+          <img alt="vuokaavio" src={vuokaavio} width="200px"/>
       </div>
     </div>
     )

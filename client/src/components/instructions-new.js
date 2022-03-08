@@ -1,4 +1,5 @@
 import kuva from '../images/kytkenta.jpg'
+import vuokaavio from '../images/vuokaavio-ties546.jpg'
 
 const OhjeetNew = () => {
     return (
@@ -62,9 +63,7 @@ const OhjeetNew = () => {
 
       <div>
         <h3>Rajapinta</h3>
-        <a href="/images/vuokaavio.ties546.jpg">
-          <img alt="vuokaavio" src="/images/vuokaavio-ties546.jpg" width="150px" height="auto"></img>
-        </a>
+          <img alt="vuokaavio" src={src} width="200px"/>
       </div>
     </div>
     )
